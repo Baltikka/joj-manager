@@ -14,3 +14,7 @@ tired of file managers with fancy UI, mouse support, and can actually be used to
 reconsider your existence.
 
 # there is no point in using joj manager!
+
+"Я бы этим даже пользовался, если бы мне нужен был файловый менеджер" - Макс
+
+"А нахуя твой менеджер тогда? Если это не менеджер" - Саня

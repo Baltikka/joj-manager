@@ -148,8 +148,17 @@ int main()
 			strcat(command, search);
 			strcat(command, "/");
 			strcat(command, mdname);
-			system(command);
-			wprintw(input_win, "Directory %s has been created", mdname);
+			strcpy(gpath,search);
+			strcat(gpath, "/");
+			strcat(gpath, mdname);
+			entry=opendir(gpath);
+			if(entry==NULL)
+			{
+				system(command);
+				wprintw(input_win, "Directory %s has been created", mdname);
+			}
+			else
+				wprintw(input_win, "Directory %s already exists", mdname);
 			wrefresh(input_win);
 			noecho();
 			curs_set(0);
@@ -170,6 +179,7 @@ int main()
 			wprintw(input_win, "Are you sure you want to remove %s? y/n", mdname);
 			wattroff(input_win,A_REVERSE);
 			wrefresh(input_win);
+			werase(input_win);
 			control = getch();
 			if(control == 'y' || control == 'Y')
 			{
@@ -177,16 +187,23 @@ int main()
 				strcat(command, search);
 				strcat(command, "/");
 				strcat(command, mdname);
-				system(command);
-				werase(input_win);
-				wprintw(input_win, "%s has been removed", mdname);
+				strcpy(gpath,search);
+				strcat(gpath, "/");
+				strcat(gpath, mdname);
+				entry=opendir(gpath);
+				if(entry!=NULL)
+				{
+					system(command);
+					wprintw(input_win, "%s has been removed", mdname);
+				}
+				else
+					wprintw(input_win, "%s does not exist", mdname);
 				int counter = 0;
 				wrefresh(input_win);
 				curs_set(0);
 				break;
 			}
 			else
-				werase(input_win);
 				wprintw(input_win, search);
 				wrefresh(input_win);
 				break;
