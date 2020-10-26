@@ -1,6 +1,16 @@
 COMMAND LIST:
+
+I - input a global path
+if left empty, refreshes active dir;
+C - change active dir
+.. can be entered to go up a level;
 P - copy a file or a dir;
 N - create new dir;
 R - remove a file or a dir;
-O - open a text file;
+O - open a text file
+any file can be opened as text;
+
 Q - exit;
+
+ 
+--joj systems, 2020--

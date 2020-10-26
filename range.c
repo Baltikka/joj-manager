@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include <string.h>
+//#include <locale.h>
 
 struct dirent *de;
 char search[100];
@@ -20,6 +21,7 @@ int maxlines, maxcols;
 int main()
 {
 	initscr();
+	use_legacy_coding(2);
 	cbreak();
 	noecho();
 	start_color();
@@ -45,13 +47,14 @@ int main()
 	WINDOW *input_win;
 	input_win = newwin(1,maxcols-2,1,1);
 	FILE *openfile;
+	FILE *helpfile;
 	wattron(input_win,COLOR_PAIR(2));
 	wattron(first_win,COLOR_PAIR(4));
 	wattron(second_win,COLOR_PAIR(3));
 	attron(A_REVERSE);
 	box(stdscr,0,0);
 	mvaddstr(0,maxcols/2-5,"joj-manager");
-	mvaddstr(maxlines-1, 2, "I-input path C-change dir N-new dir R-remove O-open text file Q-quit");
+	mvaddstr(maxlines-1, 2, "I-input path C-change dir H-help Q-quit");
 	mvhline(2,1,0,maxcols-2);
 	mvaddstr(2,1,"UPPER LEVEL");
 	mvaddstr(2,maxcols/3,"CURRENT LEVEL");
@@ -247,6 +250,7 @@ int main()
 			werase(second_win);
 			werase(third_win);
 			wprintw(input_win,"-open file?-  ");
+			noecho();
 			wscanw(input_win,"%s", mdname);
 			werase(input_win);
 			strcpy(gpath, search);
@@ -327,16 +331,20 @@ int main()
 				wrefresh(input_win);
 			}
 			break;
+		case('h'):
+		case('H'):
+			werase(third_win);
+			helpfile=fopen("help","rt");
+			while(fgets(readstr, 1000, helpfile)!=NULL)
+				wprintw(third_win,"%s",readstr);
+			wrefresh(third_win);
+			wrefresh(third_win);
+			break;
 		default:
 			//any key
 			break;
 			
 	}}
-	wrefresh(first_win);
-	wrefresh(second_win);
-	wrefresh(third_win);
-	getch();
-	//closedir(entry);
 	endwin();
 	return 0;
 }
