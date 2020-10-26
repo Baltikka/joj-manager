@@ -164,6 +164,7 @@ int main()
 			werase(second_win);
 			werase(third_win);
 			wprintw(input_win,"-remove-  ");
+			noecho();
 			wscanw(input_win,"%s", mdname);
 			werase(input_win);
 			wattron(input_win,A_REVERSE);
@@ -182,7 +183,6 @@ int main()
 				wprintw(input_win, "%s has been removed", mdname);
 				wrefresh(second_win);
 				wrefresh(input_win);
-				noecho();
 				curs_set(0);
 				break;
 			}
@@ -300,6 +300,7 @@ int main()
 				strcat(command, " ");
 				wrefresh(input_win);
 				wprintw(input_win,"-copy to-  /");
+				noecho();
 				wscanw(input_win,"%s", mdname);
 				werase(input_win);
 				char temp[100];
@@ -324,6 +325,7 @@ int main()
 			}
 			else
 			{
+				noecho();
 				werase(input_win);
 				wattron(input_win,A_REVERSE);
 				wprintw(input_win,"no such file");
