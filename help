@@ -1,0 +1,6 @@
+COMMAND LIST:
+P - copy a file or a dir;
+N - create new dir;
+R - remove a file or a dir;
+O - open a text file;
+Q - exit;
