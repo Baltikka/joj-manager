@@ -51,7 +51,7 @@ int main()
 	attron(A_REVERSE);
 	box(stdscr,0,0);
 	mvaddstr(0,maxcols/2-5,"joj-manager");
-	mvaddstr(maxlines-1, 2, "I-input path C-change dir N-new dir R-remove dir )-open text file Q-quit");
+	mvaddstr(maxlines-1, 2, "I-input path C-change dir N-new dir R-remove O-open text file Q-quit");
 	mvhline(2,1,0,maxcols-2);
 	mvaddstr(2,1,"UPPER LEVEL");
 	mvaddstr(2,maxcols/3,"CURRENT LEVEL");
@@ -160,7 +160,7 @@ int main()
 			werase(first_win);
 			werase(second_win);
 			werase(third_win);
-			wprintw(input_win,"-remove which directory?-  ");
+			wprintw(input_win,"-remove-  ");
 			wscanw(input_win,"%s", mdname);
 			werase(input_win);
 			wattron(input_win,A_REVERSE);
@@ -176,7 +176,7 @@ int main()
 				strcat(command, mdname);
 				system(command);
 				werase(input_win);
-				wprintw(input_win, "Directory %s has been removed", mdname);
+				wprintw(input_win, "%s has been removed", mdname);
 				wrefresh(second_win);
 				wrefresh(input_win);
 				noecho();
@@ -257,7 +257,7 @@ int main()
 			{
 				while(fgets(readstr, 1000, openfile)!=NULL)
 					wprintw(third_win,"%s",readstr);
-					werase(input_win);
+				werase(input_win);
 				wprintw(input_win,"%s",gpath);
 				wrefresh(input_win);
 				wrefresh(third_win);
@@ -265,11 +265,66 @@ int main()
 			}
 			else
 			{
+				werase(input_win);
+				wattron(input_win,A_REVERSE);
+				wprintw(input_win,"no such file");
+				wattroff(input_win,A_REVERSE);
+				wrefresh(input_win);
+			}
+			break;
+		case('p'):
+		case('P'):
+			echo();
+			curs_set(1);
 			werase(input_win);
-			wattron(input_win,A_REVERSE);
-			wprintw(input_win,"no such file");
-			wattroff(input_win,A_REVERSE);
-			wrefresh(input_win);
+			werase(first_win);
+			werase(second_win);
+			werase(third_win);
+			wprintw(input_win,"-copy which file-  ");
+			wscanw(input_win,"%s", mdname);
+			werase(input_win);
+			strcpy(gpath, search);
+			strcat(gpath, "/");
+			strcat(gpath, mdname);
+			openfile=fopen(gpath, "rt");
+			if(openfile!=NULL)
+			{
+				strcpy(command, "cp ");
+				strcat(command, search);
+				strcat(command, "/");
+				strcat(command, mdname);
+				strcat(command, " ");
+				wrefresh(input_win);
+				wprintw(input_win,"-copy to-  /");
+				wscanw(input_win,"%s", mdname);
+				werase(input_win);
+				char temp[100];
+				strcpy(temp,"/");
+				strcat(temp,mdname);
+				entry = opendir(temp);
+				if(entry==NULL)
+				{
+					werase(input_win);
+					wattron(input_win,A_REVERSE);
+					wprintw(input_win,"no such dir\n");
+					wattroff(input_win,A_REVERSE);
+					wrefresh(input_win);
+				}
+				else
+				{
+					strcat(command, temp);
+					wprintw(input_win,"copied");
+					system(command);
+					wrefresh(input_win);
+				}
+			}
+			else
+			{
+				werase(input_win);
+				wattron(input_win,A_REVERSE);
+				wprintw(input_win,"no such file");
+				wattroff(input_win,A_REVERSE);
+				wrefresh(input_win);
 			}
 			break;
 		default:
