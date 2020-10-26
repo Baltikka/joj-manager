@@ -150,7 +150,6 @@ int main()
 			strcat(command, mdname);
 			system(command);
 			wprintw(input_win, "Directory %s has been created", mdname);
-			wrefresh(second_win);
 			wrefresh(input_win);
 			noecho();
 			curs_set(0);
@@ -164,8 +163,8 @@ int main()
 			werase(second_win);
 			werase(third_win);
 			wprintw(input_win,"-remove-  ");
-			noecho();
 			wscanw(input_win,"%s", mdname);
+			noecho();
 			werase(input_win);
 			wattron(input_win,A_REVERSE);
 			wprintw(input_win, "Are you sure you want to remove %s? y/n", mdname);
@@ -181,7 +180,7 @@ int main()
 				system(command);
 				werase(input_win);
 				wprintw(input_win, "%s has been removed", mdname);
-				wrefresh(second_win);
+				int counter = 0;
 				wrefresh(input_win);
 				curs_set(0);
 				break;
