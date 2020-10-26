@@ -11,6 +11,7 @@ char command[100];
 char mdname[100];
 char gpath[100];
 char local[100][100];
+char readstr[1000];
 DIR *entry;
 DIR *preentry;
 char control;
@@ -43,6 +44,7 @@ int main()
 	third_win = newwin(maxlines-4,maxcols/3-1,3,maxcols/3*2);
 	WINDOW *input_win;
 	input_win = newwin(1,maxcols-2,1,1);
+	FILE *openfile;
 	wattron(input_win,COLOR_PAIR(2));
 	wattron(first_win,COLOR_PAIR(4));
 	wattron(second_win,COLOR_PAIR(3));
@@ -50,7 +52,6 @@ int main()
 	box(stdscr,0,0);
 	mvaddstr(0,maxcols/2-5,"joj-manager");
 	mvaddstr(maxlines-1, 2, "I-input path C-change dir N-new dir R-remove dir Q-quit");
-	
 	mvhline(2,1,0,maxcols-2);
 	mvaddstr(2,1,"UPPER LEVEL");
 	mvaddstr(2,maxcols/3,"CURRENT LEVEL");
@@ -236,6 +237,40 @@ int main()
 				wrefresh(first_win);
 				wrefresh(second_win);
 				wrefresh(third_win);
+			break;
+		case('o'):
+		case('O'):
+			echo();
+			curs_set(1);
+			werase(input_win);
+			werase(first_win);
+			werase(second_win);
+			werase(third_win);
+			wprintw(input_win,"-open file?-  ");
+			wscanw(input_win,"%s", mdname);
+			werase(input_win);
+			strcpy(gpath, search);
+			strcat(gpath, "/");
+			strcat(gpath, mdname);
+			openfile=fopen(gpath, "rt");
+			if(openfile!=NULL)
+			{
+				while(fgets(readstr, 1000, openfile)!=NULL)
+					wprintw(third_win,"%s",readstr);
+					werase(input_win);
+				wprintw(input_win,"%s",gpath);
+				wrefresh(input_win);
+				wrefresh(third_win);
+					
+			}
+			else
+			{
+			werase(input_win);
+			wattron(input_win,A_REVERSE);
+			wprintw(input_win,"no such file");
+			wattroff(input_win,A_REVERSE);
+			wrefresh(input_win);
+			}
 			break;
 		default:
 			/////
