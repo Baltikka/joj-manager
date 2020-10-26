@@ -51,7 +51,7 @@ int main()
 	attron(A_REVERSE);
 	box(stdscr,0,0);
 	mvaddstr(0,maxcols/2-5,"joj-manager");
-	mvaddstr(maxlines-1, 2, "I-input path C-change dir N-new dir R-remove dir Q-quit");
+	mvaddstr(maxlines-1, 2, "I-input path C-change dir N-new dir R-remove dir )-open text file Q-quit");
 	mvhline(2,1,0,maxcols-2);
 	mvaddstr(2,1,"UPPER LEVEL");
 	mvaddstr(2,maxcols/3,"CURRENT LEVEL");
@@ -273,6 +273,7 @@ int main()
 			}
 			break;
 		default:
+			//any key
 			break;
 			
 	}}
