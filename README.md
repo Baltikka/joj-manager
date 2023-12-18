@@ -1,7 +1,5 @@
-# ЖОЖ МАНАГЕР
-это уже не прикол это уже курсач
 # description
-a bad file manager.
+an incomplete file manager.
 
 ![image](https://github.com/Baltikka/joj-manager/assets/73462095/d38c6194-8ac4-4ef7-afc6-b10382584c64)
 # features
